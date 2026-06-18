@@ -207,12 +207,14 @@
     background:rgba(22,23,25,.86);backdrop-filter:blur(18px);border-top:1px solid var(--line);
     display:flex;align-items:flex-start;padding:11px 6px 0;
   }
-  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--txt-3);font-size:10.5px;font-weight:600;cursor:pointer}
-  .tab .ti{font-size:21px;line-height:1}
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--txt-3);font-size:10.5px;font-weight:600;cursor:pointer;transition:color .15s}
+  .tab .ti{width:26px;height:26px;line-height:0;display:grid;place-items:center;position:relative}
+  .tab .ti svg{width:26px;height:26px;display:block}
   .tab.active{color:var(--yellow)}
-  .tab.qr{position:relative;top:-14px}
-  .tab.qr .ti{width:62px;height:62px;border-radius:50%;background:var(--yellow);color:#1a1a1a;display:grid;place-items:center;font-size:27px;box-shadow:0 10px 26px rgba(255,224,0,.35);border:5px solid var(--app-bg)}
-  .tab.qr span{color:var(--txt-2)}
+  .tab .tab-badge::after{content:attr(data-badge);position:absolute;top:-4px;right:-7px;min-width:16px;height:16px;padding:0 4px;border-radius:9px;background:var(--yellow);color:#1a1a1a;font-size:10px;font-weight:800;display:grid;place-items:center;border:2px solid var(--app-bg)}
+  .tab.qr{position:relative;top:-16px;flex:0 0 auto;width:72px}
+  .tab.qr .ti{width:62px;height:62px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;box-shadow:0 10px 26px rgba(255,224,0,.35);border:5px solid var(--app-bg)}
+  .tab.qr .ti svg{width:30px;height:30px}
 
   /* ===== Bottom sheet (payment) ===== */
   .scrim{position:absolute;inset:0;background:rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:.3s;z-index:70;backdrop-filter:blur(2px)}
@@ -341,6 +343,49 @@
   .success .where b{color:var(--txt)}
   .success .done{width:100%;max-width:320px;height:56px;border:none;border-radius:16px;background:var(--surface-2);color:var(--txt);font-family:var(--font);font-weight:700;font-size:16px;cursor:pointer}
 
+  /* ===== Product detail (PDP) ===== */
+  .pdp{z-index:68;background:var(--app-bg);transform:translateX(100%);transition:transform .32s cubic-bezier(.3,.9,.3,1);visibility:hidden}
+  .pdp.show{transform:translateX(0);visibility:visible}
+  .pdp-scroll{position:absolute;inset:0;bottom:96px;overflow-y:auto}
+  .pdp-scroll::-webkit-scrollbar{width:0}
+  .pdp-hero{position:relative;background:#fff;padding-top:var(--safe-top);height:392px;display:grid;place-items:center;overflow:hidden}
+  .pdp-hero img{width:84%;height:84%;object-fit:contain}
+  .pdp-top{position:absolute;top:calc(var(--safe-top) + 6px);left:14px;right:14px;display:flex;justify-content:space-between;z-index:3}
+  .pdp-ic{width:42px;height:42px;border-radius:13px;background:rgba(20,20,22,.55);backdrop-filter:blur(8px);display:grid;place-items:center;font-size:19px;color:#fff;cursor:pointer;border:none}
+  .pdp-disc2{position:absolute;left:14px;bottom:14px;background:#ff3b30;color:#fff;font-size:13px;font-weight:800;padding:5px 11px;border-radius:10px;z-index:3}
+  .pdp-body{padding:20px 18px 8px}
+  .pdp-cat{font-size:12px;color:var(--txt-3);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .pdp-name{font-size:23px;font-weight:800;letter-spacing:-.4px;line-height:1.2;margin:7px 0 10px}
+  .pdp-meta{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--txt-2);margin-bottom:18px}
+  .pdp-meta .st{display:flex;align-items:center;gap:5px}
+  .pdp-meta .st b{color:var(--txt)}
+  .pdp-meta .av{color:#5fe084;display:flex;align-items:center;gap:5px}
+  .pdp-priceblock{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+  .pdp-priceblock b{font-size:30px;font-weight:800;letter-spacing:-.6px}
+  .pdp-priceblock .old{font-size:16px;color:var(--txt-3);text-decoration:line-through}
+  .pdp-priceblock .save{background:rgba(52,199,89,.15);color:#5fe084;font-size:12px;font-weight:700;padding:5px 9px;border-radius:9px}
+  .pdp-sub{font-size:14px;color:#cfd1d6;line-height:1.55;margin-bottom:22px}
+  .pdp-h{font-size:16px;font-weight:800;margin-bottom:12px;letter-spacing:-.2px}
+  .pdp-specs{background:var(--surface);border-radius:16px;padding:4px 16px;margin-bottom:22px}
+  .pdp-specs .row{display:flex;justify-content:space-between;align-items:baseline;padding:11px 0;font-size:13.5px;border-bottom:1px solid var(--line);gap:14px}
+  .pdp-specs .row:last-child{border-bottom:none}
+  .pdp-specs .row span{color:var(--txt-3);flex:0 0 auto}
+  .pdp-specs .row b{color:var(--txt);font-weight:600;text-align:right}
+  .pdp-pickup-card{display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:16px;padding:14px;margin-bottom:8px}
+  .pdp-pickup-card .ic{width:42px;height:42px;border-radius:12px;background:rgba(52,199,89,.15);display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+  .pdp-pickup-card .info b{font-size:14px;font-weight:700;display:block}
+  .pdp-pickup-card .info small{font-size:12px;color:var(--txt-2)}
+  .pdp-foot{position:absolute;left:0;right:0;bottom:0;z-index:5;background:var(--app-bg);border-top:1px solid var(--line);padding:12px 18px calc(14px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px}
+  .pdp-foot .fp{line-height:1.1}
+  .pdp-foot .fp small{font-size:11px;color:var(--txt-3);text-decoration:line-through}
+  .pdp-foot .fp b{font-size:20px;font-weight:800;display:block}
+  .pdp-addbtn{flex:1;height:56px;border:none;border-radius:16px;background:var(--yellow);color:#1a1a1a;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 10px 26px rgba(255,224,0,.28);transition:.15s}
+  .pdp-addbtn:active{transform:scale(.98)}
+  .pdp-foot-step{flex:1;display:flex;align-items:center;justify-content:space-between;background:var(--yellow);border-radius:16px;height:56px;overflow:hidden}
+  .pdp-foot-step button{width:54px;height:56px;border:none;background:none;color:#1a1a1a;font-size:26px;font-weight:700;cursor:pointer}
+  .pdp-foot-step b{font-size:17px;font-weight:800;color:#1a1a1a}
+  .pdp-gotocart{flex:0 0 auto;height:56px;padding:0 18px;border-radius:16px;background:#1a1a1a;color:#fff;border:none;font-family:var(--font);font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px}
+
   /* toast */
   .toast{position:absolute;left:50%;bottom:160px;transform:translate(-50%,20px);z-index:65;background:#fff;color:#1a1a1a;font-weight:700;font-size:13px;padding:11px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
   .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -423,14 +468,70 @@
 
       <!-- tab bar -->
       <nav class="tabbar">
-        <div class="tab"><span class="ti">📍</span><span>Главная</span></div>
-        <div class="tab active"><span class="ti">🛍️</span><span>Магазин</span></div>
-        <div class="tab qr"><span class="ti">▣</span><span>Оплатить</span></div>
-        <div class="tab"><span class="ti">🧾</span><span>Заказы</span></div>
-        <div class="tab"><span class="ti">👤</span><span>Кабинет</span></div>
+        <div class="tab active">
+          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          <span>Главная</span>
+        </div>
+        <div class="tab">
+          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="6.5" cy="15" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="15" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="13" r="1.5" fill="currentColor"/></svg></span>
+          <span>Суперлейка</span>
+        </div>
+        <div class="tab qr" onclick="toast('Сканер QR на мойке')">
+          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Z" stroke="#1a1a1a" stroke-width="1.9" stroke-linejoin="round"/><path d="M14 14h2v2h-2v-2Zm4 0h2v2h-2v-2Zm-4 4h2v2h-2v-2Zm4 0h2v2h-2v-2Z" fill="#1a1a1a"/></svg></span>
+        </div>
+        <div class="tab" onclick="openSheetIfCart()">
+          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.6 9a8 8 0 1 1-.3 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8v4.5l3 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span>Заказы</span>
+        </div>
+        <div class="tab">
+          <span class="ti tab-badge" data-badge="2"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+          <span>Кабинет</span>
+        </div>
       </nav>
 
       <div class="toast" id="toast">Добавлено в корзину</div>
+    </section>
+
+    <!-- ===================== PRODUCT DETAIL (PDP) ===================== -->
+    <section class="screen pdp" id="pdp">
+      <div class="pdp-scroll" id="pdpScroll">
+        <div class="pdp-hero">
+          <div class="pdp-top">
+            <button class="pdp-ic" onclick="closePDP()">‹</button>
+            <button class="pdp-ic" onclick="toast('Добавлено в избранное')">♡</button>
+          </div>
+          <img id="pdpImg" src="" alt=""/>
+          <div class="pdp-disc2">−10%</div>
+        </div>
+        <div class="pdp-body">
+          <div class="pdp-cat" id="pdpCat"></div>
+          <h1 class="pdp-name" id="pdpName"></h1>
+          <div class="pdp-meta">
+            <span class="st">⭐ <b id="pdpRate"></b></span>
+            <span id="pdpReviews"></span>
+            <span class="av">● <span id="pdpStock"></span></span>
+          </div>
+          <div class="pdp-priceblock">
+            <b id="pdpPrice"></b>
+            <span class="old" id="pdpOld"></span>
+            <span class="save" id="pdpSave"></span>
+          </div>
+          <p class="pdp-sub" id="pdpDesc"></p>
+
+          <div class="pdp-h">Характеристики</div>
+          <div class="pdp-specs" id="pdpSpecs"></div>
+
+          <div class="pdp-h">Где забрать</div>
+          <div class="pdp-pickup-card">
+            <div class="ic">🏪</div>
+            <div class="info">
+              <b>Самовывоз сегодня</b>
+              <small id="pdpPickupNote">Доступно в 12 точках рядом · ближайшая 1.2 км</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pdp-foot" id="pdpFoot"></div>
     </section>
 
     <!-- ===================== PAYMENT SHEET ===================== -->
@@ -551,20 +652,20 @@
 <script>
   // ---------- Data ----------
   const PRODUCTS = [
-    {id:1, cat:'Шины и диски', name:'Чернитель резины Black Rubber', vol:'флакон 600 мл', price:251, img:'assets/products/p06.jpg', rate:4.9},
-    {id:2, cat:'Шины и диски', name:'Очиститель дисков Disk Cleaner Super', vol:'флакон 600 мл', price:456, img:'assets/products/p03.jpg', rate:4.8},
-    {id:3, cat:'Кузов', name:'Очиститель битума Antibitum', vol:'флакон 500 мл', price:399, img:'assets/products/p02.jpg', rate:4.9},
-    {id:4, cat:'Пластик', name:'Восстановитель пластика Restorer', vol:'флакон 500 мл', price:707, img:'assets/products/p04.jpg', rate:5.0},
-    {id:5, cat:'Кузов', name:'Полимер-консервант Hydro Polymer', vol:'флакон 500 мл', price:1070, img:'assets/products/p00.jpg', rate:4.9},
-    {id:6, cat:'Стёкла', name:'Очиститель стёкол Clean Glass', vol:'флакон 600 мл', price:181, img:'assets/products/p10.jpg', rate:4.7},
-    {id:7, cat:'Кузов', name:'Антимошка Mosquitos Cleaner', vol:'флакон 600 мл', price:202, img:'assets/products/p11.jpg', rate:4.8},
-    {id:8, cat:'Шины и диски', name:'Чернитель шин Black Brilliance', vol:'флакон 600 мл', price:802, img:'assets/products/p08.jpg', rate:5.0},
-    {id:9, cat:'Двигатель', name:'Очиститель двигателя Motor Cleaner', vol:'флакон 600 мл', price:217, img:'assets/products/p24.png', rate:4.7},
-    {id:10, cat:'Стёкла', name:'Защита стёкол Антидождь', vol:'флакон 250 мл', price:673, img:'assets/products/p16.jpg', rate:4.9},
-    {id:11, cat:'Шины и диски', name:'Чернитель шин Tire Polish', vol:'аэрозоль 650 мл', price:563, img:'assets/products/p13.jpg', rate:4.8},
-    {id:12, cat:'Стёкла', name:'Антизапотеватель Antifog', vol:'флакон 250 мл', price:217, img:'assets/products/p01.jpg', rate:4.6},
-    {id:13, cat:'Двигатель', name:'Пенный очиститель двигателя', vol:'аэрозоль 650 мл', price:489, img:'assets/products/p19.jpg', rate:4.7},
-    {id:14, cat:'Стёкла', name:'Стеклоомыватель Summer Shine', vol:'канистра 5 л', price:247, img:'assets/products/p20.jpg', rate:4.8},
+    {id:1, cat:'Шины и диски', name:'Чернитель резины Black Rubber', vol:'флакон 600 мл', price:251, img:'assets/products/p06.jpg', rate:4.9, reviews:312, type:'Готовый состав', desc:'Придаёт шинам глубокий чёрный цвет и эффект мокрого блеска. Создаёт водоотталкивающую плёнку, защищает резину от пересыхания и растрескивания.'},
+    {id:2, cat:'Шины и диски', name:'Очиститель дисков Disk Cleaner Super', vol:'флакон 600 мл', price:456, img:'assets/products/p03.jpg', rate:4.8, reviews:208, type:'Готовый состав', desc:'Нейтральный состав для безопасной очистки любых дисков от тормозной пыли и металлических вкраплений. Меняет цвет при реакции с загрязнением.'},
+    {id:3, cat:'Кузов', name:'Очиститель битума Antibitum', vol:'флакон 500 мл', price:399, img:'assets/products/p02.jpg', rate:4.9, reviews:174, type:'Готовый состав', desc:'Быстро удаляет битумные пятна, следы гудрона и смолы с лакокрасочного покрытия без вреда для краски и лака.'},
+    {id:4, cat:'Пластик', name:'Восстановитель пластика Restorer', vol:'флакон 500 мл', price:707, img:'assets/products/p04.jpg', rate:5.0, reviews:421, type:'Готовый состав', desc:'Возвращает первоначальный цвет и матовый блеск наружному и внутреннему пластику. Защищает от ультрафиолета и выгорания.'},
+    {id:5, cat:'Кузов', name:'Полимер-консервант Hydro Polymer', vol:'флакон 500 мл', price:1070, img:'assets/products/p00.jpg', rate:4.9, reviews:566, type:'Концентрат', desc:'Жидкий полимер для защиты ЛКП. Создаёт мощный гидрофобный слой, продлевает блеск и облегчает последующую мойку.'},
+    {id:6, cat:'Стёкла', name:'Очиститель стёкол Clean Glass', vol:'флакон 600 мл', price:181, img:'assets/products/p10.jpg', rate:4.7, reviews:289, type:'Готовый состав', desc:'Удаляет дорожную плёнку, следы насекомых и разводы. Антистатические свойства — блестящие стёкла без бликов.'},
+    {id:7, cat:'Кузов', name:'Антимошка Mosquitos Cleaner', vol:'флакон 600 мл', price:202, img:'assets/products/p11.jpg', rate:4.8, reviews:198, type:'Готовый состав', desc:'Эффективно растворяет следы насекомых с капота, бампера и стекла. Безопасен для лакокрасочного покрытия.'},
+    {id:8, cat:'Шины и диски', name:'Чернитель шин Black Brilliance', vol:'флакон 600 мл', price:802, img:'assets/products/p08.jpg', rate:5.0, reviews:143, type:'Готовый состав', desc:'Глянцевый чернитель с долговременным эффектом мокрых шин. Не липнет и не разбрызгивается при движении.'},
+    {id:9, cat:'Двигатель', name:'Очиститель двигателя Motor Cleaner', vol:'флакон 600 мл', price:217, img:'assets/products/p24.png', rate:4.7, reviews:256, type:'Готовый состав', desc:'Удаляет масляные и грязевые отложения с моторного отсека. Безопасен для проводки и резиновых элементов.'},
+    {id:10, cat:'Стёкла', name:'Защита стёкол Антидождь', vol:'флакон 250 мл', price:673, img:'assets/products/p16.jpg', rate:4.9, reviews:512, type:'Готовый состав', desc:'Образует невидимую плёнку, отталкивающую воду. Улучшает обзор в дождь, снижает налипание грязи и наледи.'},
+    {id:11, cat:'Шины и диски', name:'Чернитель шин Tire Polish', vol:'аэрозоль 650 мл', price:563, img:'assets/products/p13.jpg', rate:4.8, reviews:187, type:'Аэрозоль', desc:'Аэрозольный чернитель для быстрого нанесения. Глянцевый блеск и защита резины от старения.'},
+    {id:12, cat:'Стёкла', name:'Антизапотеватель Antifog', vol:'флакон 250 мл', price:217, img:'assets/products/p01.jpg', rate:4.6, reviews:96, type:'Готовый состав', desc:'Предотвращает запотевание стёкол и зеркал. Сохраняет прозрачность при резких перепадах температуры.'},
+    {id:13, cat:'Двигатель', name:'Пенный очиститель двигателя', vol:'аэрозоль 650 мл', price:489, img:'assets/products/p19.jpg', rate:4.7, reviews:132, type:'Аэрозоль', desc:'Активная пена для глубокой очистки моторного отсека. Удобное аэрозольное нанесение, не требует смывания под давлением.'},
+    {id:14, cat:'Стёкла', name:'Стеклоомыватель Summer Shine', vol:'канистра 5 л', price:247, img:'assets/products/p20.jpg', rate:4.8, reviews:341, type:'Концентрат', desc:'Летняя омывающая жидкость. Эффективно смывает насекомых и дорожную грязь, не оставляет разводов.'},
   ];
 
   const CATS = [
@@ -610,10 +711,10 @@
     $('#grid').innerHTML = list.map(p=>{
       const q = cart[p.id]||0;
       return `
-      <div class="card ${q?'incart':''}" id="card-${p.id}">
+      <div class="card ${q?'incart':''}" id="card-${p.id}" onclick="openPDP(${p.id})">
         <div class="thumb">
           <div class="disc">−10%</div>
-          <div class="fav">♡</div>
+          <div class="fav" onclick="event.stopPropagation();toast('Добавлено в избранное')">♡</div>
           <img src="${p.img}" alt="${p.name}" loading="lazy"/>
         </div>
         <div class="cat">${p.cat}</div>
@@ -648,11 +749,14 @@
     syncCard(id); updateCart();
   }
   function syncCard(id){
-    const card = $('#card-'+id); if(!card) return;
-    const q = cart[id]||0;
-    card.classList.toggle('incart', q>0);
-    const qb = $('#q-'+id); if(qb) qb.textContent = q;
-    const add = card.querySelector('.add'); if(add) add.classList.toggle('has', q>0);
+    const card = $('#card-'+id);
+    if(card){
+      const q = cart[id]||0;
+      card.classList.toggle('incart', q>0);
+      const qb = $('#q-'+id); if(qb) qb.textContent = q;
+      const add = card.querySelector('.add'); if(add) add.classList.toggle('has', q>0);
+    }
+    if(pdpId===id) renderPdpFoot();
   }
   function cartList(){
     return Object.keys(cart).map(id=>{
@@ -670,6 +774,58 @@
     bar.classList.toggle('show', n>0);
     $('#cartCount').textContent = qtyLabel(n);
     $('#cartSum').textContent = fmt(subtotal());
+  }
+
+  // ---------- Product detail (PDP) ----------
+  let pdpId = null;
+  function openPDP(id){
+    const p = PRODUCTS.find(x=>x.id===id); if(!p) return;
+    pdpId = id;
+    $('#pdpImg').src = p.img;
+    $('#pdpImg').alt = p.name;
+    $('#pdpCat').textContent = p.cat;
+    $('#pdpName').textContent = p.name;
+    $('#pdpRate').textContent = p.rate.toFixed(1);
+    $('#pdpReviews').textContent = p.reviews+' '+plural(p.reviews,'отзыв','отзыва','отзывов');
+    $('#pdpStock').textContent = 'В наличии';
+    $('#pdpPrice').textContent = fmt(p.price);
+    $('#pdpOld').textContent = fmt(oldPrice(p.price));
+    $('#pdpSave').textContent = '−'+fmt(oldPrice(p.price)-p.price);
+    $('#pdpDesc').textContent = p.desc;
+    $('#pdpSpecs').innerHTML = [
+      ['Бренд','GRASS'],
+      ['Фасовка', p.vol.charAt(0).toUpperCase()+p.vol.slice(1)],
+      ['Тип средства', p.type],
+      ['Назначение', p.cat],
+      ['Артикул', '1'+(102540+p.id*37)],
+      ['Страна', 'Россия'],
+    ].map(([k,v])=>`<div class="row"><span>${k}</span><b>${v}</b></div>`).join('');
+    renderPdpFoot();
+    $('#pdpScroll').scrollTo({top:0});
+    $('#pdp').classList.add('show');
+  }
+  function closePDP(){ $('#pdp').classList.remove('show'); pdpId=null; }
+  function renderPdpFoot(){
+    const p = PRODUCTS.find(x=>x.id===pdpId); if(!p) return;
+    const q = cart[p.id]||0;
+    const foot = $('#pdpFoot');
+    if(q===0){
+      foot.innerHTML = `
+        <div class="fp"><small>${fmt(oldPrice(p.price))}</small><b>${fmt(p.price)}</b></div>
+        <button class="pdp-addbtn" onclick="addToCart(${p.id})">🛒 В корзину</button>`;
+    } else {
+      foot.innerHTML = `
+        <div class="pdp-foot-step">
+          <button onclick="dec(${p.id})">−</button>
+          <b>${q} шт · ${fmt(p.price*q)}</b>
+          <button onclick="addToCart(${p.id})">＋</button>
+        </div>
+        <button class="pdp-gotocart" onclick="openSheet()">Оформить →</button>`;
+    }
+  }
+  function openSheetIfCart(){
+    if(totalQty()>0) openSheet();
+    else toast('Здесь будут ваши заказы');
   }
 
   // ---------- Toast ----------
@@ -807,6 +963,7 @@
     removePromo();
     document.querySelectorAll('#bonusSeg button').forEach((b,i)=>b.classList.toggle('on',i===0));
     $('#success').classList.remove('show');
+    closePDP();
     renderGrid(); updateCart();
     $('#mainScroll').scrollTo({top:0,behavior:'smooth'});
   }
