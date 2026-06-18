@@ -186,6 +186,100 @@
   .card.incart .stepper{display:flex}
   .card.incart{border-color:rgba(255,224,0,.45)}
 
+  /* ===== Screen switching ===== */
+  .appscreen{opacity:0;visibility:hidden;transition:opacity .22s ease}
+  .appscreen.active{opacity:1;visibility:visible}
+
+  /* ===== Map home ===== */
+  .map{position:absolute;inset:0;overflow:hidden;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 62px, rgba(255,255,255,.035) 62px 63px),
+      repeating-linear-gradient(0deg, transparent 0 62px, rgba(255,255,255,.035) 62px 63px),
+      radial-gradient(120% 80% at 50% 0%, #1b1e24 0%, #131519 70%);
+  }
+  .map .road{position:absolute;background:#23262d;border-radius:20px}
+  .map .road.r1{top:18%;left:-10%;width:130%;height:16px;transform:rotate(-7deg)}
+  .map .road.r2{top:52%;left:-10%;width:130%;height:22px;transform:rotate(4deg);background:#262a31}
+  .map .road.r3{top:-10%;left:34%;width:16px;height:130%;transform:rotate(9deg)}
+  .map .road.r4{top:-10%;left:70%;width:13px;height:130%;transform:rotate(-5deg)}
+  .map .park{position:absolute;top:58%;left:8%;width:120px;height:110px;border-radius:30px;background:rgba(52,199,89,.12)}
+  .map .river{position:absolute;top:-5%;right:-6%;width:70px;height:120%;background:rgba(64,140,255,.12);transform:rotate(18deg);border-radius:40px}
+  .wpin{position:absolute;transform:translate(-50%,-100%);display:grid;place-items:center;z-index:2;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+  .wpin .wp-ic{width:40px;height:40px;border-radius:50% 50% 50% 50%;background:var(--yellow);display:grid;place-items:center;font-size:19px;position:relative}
+  .wpin .wp-ic::after{content:"";position:absolute;bottom:-5px;left:50%;transform:translateX(-50%) rotate(45deg);width:12px;height:12px;background:var(--yellow);border-radius:0 0 3px 0}
+  .me{position:absolute;top:67%;left:50%;width:18px;height:18px;border-radius:50%;background:#3b82f6;border:3px solid #fff;transform:translate(-50%,-50%);box-shadow:0 0 0 8px rgba(59,130,246,.25);z-index:2}
+
+  .map-top{position:absolute;top:calc(var(--safe-top) - 4px);left:0;right:0;padding:6px 14px;z-index:10}
+  .map-top .loc{background:rgba(22,23,25,.82);backdrop-filter:blur(12px);border-radius:16px;padding:7px 10px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
+  .map-fab{position:absolute;right:16px;bottom:calc(62% + var(--tab-h) - 28px);width:46px;height:46px;border-radius:14px;background:rgba(22,23,25,.86);backdrop-filter:blur(12px);border:1px solid var(--line);color:var(--txt);font-size:20px;display:grid;place-items:center;cursor:pointer;z-index:20;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+
+  .home-sheet{position:absolute;left:0;right:0;bottom:var(--tab-h);height:62%;z-index:30;
+    background:var(--app-bg);border-radius:26px 26px 0 0;box-shadow:0 -14px 44px rgba(0,0,0,.5);
+    display:flex;flex-direction:column;transition:height .32s cubic-bezier(.2,.9,.25,1);overflow:hidden}
+  .home-sheet.expanded{height:calc(100% - var(--safe-top) - 6px)}
+  .hs-grip{padding:10px 0 6px;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
+  .hs-grip span{width:40px;height:5px;border-radius:3px;background:var(--surface-3);display:block}
+  .hs-scroll{overflow-y:auto;padding:2px 16px 14px}
+  .hs-scroll::-webkit-scrollbar{width:0}
+  .hs-search{height:50px;background:var(--surface);border-radius:15px;display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--txt-2);font-size:15px;font-weight:500;cursor:pointer;margin-bottom:16px}
+  .hs-search span{font-size:16px}
+
+  .banners{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:0 16px 2px}
+  .banners::-webkit-scrollbar{display:none}
+  .banner{flex:0 0 84%;scroll-snap-align:start;border-radius:18px;padding:16px 18px;min-height:108px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;overflow:hidden;position:relative}
+  .banner.grass{background:linear-gradient(120deg,#1c331f 0%,#122413 60%,#0e1a12 100%);border:1px solid rgba(52,199,89,.22)}
+  .banner.b-blue{background:linear-gradient(120deg,#16263f,#0f1b2e)}
+  .banner.b-pink{background:linear-gradient(120deg,#34203a,#241528)}
+  .b-txt{display:flex;flex-direction:column;gap:2px;z-index:2}
+  .b-badge{font-size:10px;font-weight:700;color:#5fe084;text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+  .b-txt b{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .b-txt small{font-size:12px;color:#c3ccc6}
+  .b-cta{margin-top:9px;align-self:flex-start;background:var(--yellow);color:#1a1a1a;font-size:12px;font-weight:800;padding:6px 12px;border-radius:10px}
+  .b-img{font-size:50px;opacity:.9;z-index:1}
+  .dots{display:flex;gap:6px;justify-content:center;margin:11px 0 4px}
+  .dots i{width:6px;height:6px;border-radius:50%;background:var(--surface-3)}
+  .dots i.on{width:18px;border-radius:3px;background:var(--yellow)}
+
+  .qa-row{display:flex;justify-content:space-between;gap:8px;padding:14px 0 4px}
+  .qa{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;font-size:12px;font-weight:600;color:var(--txt-2);cursor:pointer}
+  .qa-ic{width:54px;height:54px;border-radius:17px;background:var(--surface);display:grid;place-items:center;font-size:23px}
+  .qa-ic.yellow{background:var(--yellow)}
+  .qa-ic.blue{background:rgba(59,130,246,.18)}
+
+  .shelf-head{display:flex;align-items:flex-end;justify-content:space-between;padding:22px 0 12px}
+  .shelf-head h3{font-size:18px;font-weight:800;letter-spacing:-.3px}
+  .shelf-head small{font-size:12px;color:var(--txt-3);display:block;margin-top:2px}
+  .shelf-head a{color:var(--yellow);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap}
+  .shelf{display:flex;gap:12px;overflow-x:auto;margin:0 -16px;padding:0 16px 4px}
+  .shelf::-webkit-scrollbar{display:none}
+  .scard{flex:0 0 144px;background:var(--surface);border-radius:16px;padding:9px;cursor:pointer;border:1px solid var(--line)}
+  .scard .sthumb{background:#fff;border-radius:12px;aspect-ratio:1/1;position:relative;display:grid;place-items:center;overflow:hidden;margin-bottom:8px}
+  .scard .sthumb img{width:100%;height:100%;object-fit:contain;padding:5px}
+  .scard .sdisc{position:absolute;top:6px;left:6px;background:#ff3b30;color:#fff;font-size:10px;font-weight:800;padding:2px 6px;border-radius:7px}
+  .scard .sname{font-size:12.5px;font-weight:600;line-height:1.25;height:31px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+  .scard .sprice{display:flex;align-items:center;justify-content:space-between;margin-top:7px}
+  .scard .sprice b{font-size:15px;font-weight:800}
+  .scard .sadd{width:32px;height:32px;border-radius:10px;background:var(--surface-3);color:var(--txt);border:none;font-size:18px;cursor:pointer}
+  .scard .sadd.has{background:var(--yellow);color:#1a1a1a}
+
+  /* ===== Store hub head + loyalty ===== */
+  .store-head{display:flex;align-items:center;gap:10px;padding:8px 16px 6px}
+  .store-back{width:38px;height:38px;border-radius:12px;background:var(--surface);border:none;color:var(--txt);font-size:22px;cursor:pointer;flex:0 0 auto}
+  .store-title{flex:1}
+  .store-title b{font-size:18px;font-weight:800;display:block;letter-spacing:-.3px}
+  .store-title small{font-size:11.5px;color:var(--txt-3)}
+  .store-head .bell{position:static;width:38px;height:38px;border-radius:12px;background:var(--surface);display:grid;place-items:center;font-size:16px}
+  .store-head .bell::after{display:none}
+  .loyalty{margin:10px 16px 4px;background:linear-gradient(120deg,#2a2722 0%,#211f1b 100%);border:1px solid rgba(255,224,0,.22);border-radius:18px;padding:15px 16px}
+  .loy-top{display:flex;align-items:flex-start;justify-content:space-between}
+  .loy-top small{font-size:11px;color:var(--txt-3);text-transform:uppercase;letter-spacing:.3px}
+  .loy-top b{font-size:26px;font-weight:800;letter-spacing:-.5px;color:var(--yellow);display:block;margin-top:2px}
+  .loy-top b span{font-size:13px;color:var(--txt-2);font-weight:600}
+  .loy-lvl{background:rgba(255,224,0,.14);color:var(--yellow);font-size:11px;font-weight:700;padding:5px 10px;border-radius:10px;margin-top:4px}
+  .loy-bar{height:7px;border-radius:4px;background:var(--surface-3);overflow:hidden;margin:13px 0 8px}
+  .loy-bar i{display:block;height:100%;background:var(--yellow);border-radius:4px}
+  .loy-note{font-size:11.5px;color:var(--txt-2)}
+
   /* ===== Cart bar ===== */
   .cartbar{
     position:absolute;left:14px;right:14px;bottom:calc(var(--tab-h) - 6px);z-index:40;
@@ -396,13 +490,14 @@
   <aside class="pitch">
     <div class="logo"><div class="mark">💧</div><b>Лейка</b></div>
     <h1>Маркетплейс <span>автохимии</span> внутри приложения мойки</h1>
-    <p>Кликабельный прототип e-com сценария: пользователь выбирает автохимию GRASS и оформляет самовывоз из магазина-партнёра или с автомойки.</p>
+    <p>Кликабельный прототип: карта-главная как точка входа, а еком открывается из баннера, полки «Товары для авто» или вкладки «Суперлейка».</p>
     <ul>
-      <li><span class="ic">🛒</span><div><b>Главный экран</b> — каталог, поиск, категории, добавление в корзину</div></li>
+      <li><span class="ic">🗺️</span><div><b>Главная — карта</b> моек, баннеры и полка товаров в нижней шторке</div></li>
+      <li><span class="ic">🛒</span><div><b>Суперлейка</b> — хаб: баллы лояльности + магазин автохимии GRASS</div></li>
       <li><span class="ic">📍</span><div><b>Самовывоз</b> из ~200 магазинов-партнёров и точек автомоек</div></li>
       <li><span class="ic">💳</span><div><b>Оплата</b> картой, баллами Лейки и промокодом</div></li>
     </ul>
-    <div class="hint">👉 Добавьте товар в корзину и нажмите на жёлтую плашку</div>
+    <div class="hint">👉 Нажмите баннер «Автохимия GRASS» или полку товаров на карте</div>
   </aside>
 
   <main class="phone" id="phone">
@@ -416,18 +511,103 @@
       </span>
     </div>
 
-    <!-- ===================== MAIN SCREEN ===================== -->
-    <section class="screen" id="mainScreen">
-      <div class="scroll" id="mainScroll">
-        <div class="app-head">
-          <div class="loc">
-            <div class="pin">📍</div>
-            <div class="meta">
-              <small>Получить в</small>
-              <b>Краснодар <span class="chev">▾</span></b>
-            </div>
-            <div class="bell">🔔</div>
+    <!-- ===================== HOME (MAP) ===================== -->
+    <section class="screen appscreen active" id="homeScreen">
+      <div class="map">
+        <div class="road r1"></div>
+        <div class="road r2"></div>
+        <div class="road r3"></div>
+        <div class="road r4"></div>
+        <div class="park"></div>
+        <div class="river"></div>
+        <div class="wpin" style="top:30%;left:24%"><span class="wp-ic">💧</span></div>
+        <div class="wpin" style="top:22%;left:62%"><span class="wp-ic">💧</span></div>
+        <div class="wpin" style="top:40%;left:46%"><span class="wp-ic">💧</span></div>
+        <div class="me"></div>
+      </div>
+
+      <div class="map-top">
+        <div class="loc">
+          <div class="pin">📍</div>
+          <div class="meta">
+            <small>Вы в городе</small>
+            <b>Краснодар <span class="chev">▾</span></b>
           </div>
+          <div class="bell">🔔</div>
+        </div>
+      </div>
+
+      <button class="map-fab" onclick="toast('Определяем геолокацию…')">◎</button>
+
+      <!-- home bottom sheet -->
+      <div class="home-sheet" id="homeSheet">
+        <div class="hs-grip" onclick="toggleHomeSheet()"><span></span></div>
+        <div class="hs-scroll">
+          <div class="hs-search" onclick="toast('Поиск моек и роботизированных моек рядом')">
+            <span>🔍</span> Где помыть машину?
+          </div>
+
+          <!-- banner carousel -->
+          <div class="banners">
+            <div class="banner grass" onclick="goStore()">
+              <div class="b-txt">
+                <span class="b-badge">● Новинка</span>
+                <b>Автохимия GRASS</b>
+                <small>Закажи и забери на мойке за час</small>
+                <span class="b-cta">В магазин →</span>
+              </div>
+              <div class="b-img">🧴</div>
+            </div>
+            <div class="banner b-blue" onclick="toast('Скидка на мойку по будням')">
+              <div class="b-txt"><b>−20% на мойку</b><small>по будням до 12:00</small></div>
+              <div class="b-img">💧</div>
+            </div>
+            <div class="banner b-pink" onclick="toast('Реферальная программа')">
+              <div class="b-txt"><b>Пригласи друга</b><small>+200 баллов на счёт</small></div>
+              <div class="b-img">🎁</div>
+            </div>
+          </div>
+          <div class="dots"><i class="on"></i><i></i><i></i></div>
+
+          <!-- quick actions -->
+          <div class="qa-row">
+            <div class="qa" onclick="toast('Поиск мойки на карте')"><span class="qa-ic blue">💧</span>Помыться</div>
+            <div class="qa" onclick="toast('Оформление ОСАГО')"><span class="qa-ic">🛡️</span>ОСАГО</div>
+            <div class="qa" onclick="goStore()"><span class="qa-ic yellow">🛒</span>Магазин</div>
+            <div class="qa" onclick="toast('Спецпредложения')"><span class="qa-ic">🏷️</span>Акции</div>
+          </div>
+
+          <!-- product shelf = entry point into e-com -->
+          <div class="shelf-head">
+            <div>
+              <h3>Товары для авто</h3>
+              <small>Заберёте на мойке или у партнёра рядом</small>
+            </div>
+            <a onclick="goStore()">Все →</a>
+          </div>
+          <div class="shelf" id="shelf"></div>
+          <div style="height:18px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== STORE (Суперлейка hub) ===================== -->
+    <section class="screen appscreen" id="storeScreen">
+      <div class="scroll" id="storeScroll">
+        <div class="store-head">
+          <button class="store-back" onclick="goHome()">‹</button>
+          <div class="store-title"><b>Суперлейка</b><small>Магазин автохимии · самовывоз</small></div>
+          <div class="bell">🔔</div>
+        </div>
+
+        <!-- loyalty strip -->
+        <div class="loyalty">
+          <div class="loy-top">
+            <div><small>Баллы Лейки</small><b>580 <span>баллов</span></b></div>
+            <span class="loy-lvl">Уровень «Знаток»</span>
+          </div>
+          <div class="loy-bar"><i style="width:64%"></i></div>
+          <small class="loy-note">До уровня «Профи» и кешбэка 7% — ещё 320 баллов</small>
         </div>
 
         <div class="search">
@@ -437,9 +617,9 @@
         </div>
 
         <div class="hero">
-          <span class="badge">● Новинка в приложении</span>
-          <h2>Автохимия GRASS<br>с доставкой за час</h2>
-          <p>Закажи и забери в магазине-партнёре или на мойке рядом</p>
+          <span class="badge">● Оплачивайте баллами Лейки</span>
+          <h2>Автохимия GRASS<br>с самовывозом за час</h2>
+          <p>Забери в магазине-партнёре или на мойке рядом</p>
           <div class="deco2">✨</div>
           <div class="deco">🧴</div>
         </div>
@@ -451,46 +631,46 @@
 
         <div class="section-head">
           <h3>Хиты автохимии</h3>
-          <a href="#">Все →</a>
+          <a onclick="setCat('Все')">Все →</a>
         </div>
         <div class="grid" id="grid"></div>
       </div>
-
-      <!-- cart bar -->
-      <div class="cartbar" id="cartbar" onclick="openSheet()">
-        <div class="ic">🛒</div>
-        <div class="txt">
-          <small id="cartCount">0 товаров</small>
-          <b id="cartSum">0 ₽</b>
-        </div>
-        <div class="go">К оплате →</div>
-      </div>
-
-      <!-- tab bar -->
-      <nav class="tabbar">
-        <div class="tab active">
-          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/></svg></span>
-          <span>Главная</span>
-        </div>
-        <div class="tab">
-          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="6.5" cy="15" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="15" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="13" r="1.5" fill="currentColor"/></svg></span>
-          <span>Суперлейка</span>
-        </div>
-        <div class="tab qr" onclick="toast('Сканер QR на мойке')">
-          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Z" stroke="#1a1a1a" stroke-width="1.9" stroke-linejoin="round"/><path d="M14 14h2v2h-2v-2Zm4 0h2v2h-2v-2Zm-4 4h2v2h-2v-2Zm4 0h2v2h-2v-2Z" fill="#1a1a1a"/></svg></span>
-        </div>
-        <div class="tab" onclick="openSheetIfCart()">
-          <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.6 9a8 8 0 1 1-.3 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8v4.5l3 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span>Заказы</span>
-        </div>
-        <div class="tab">
-          <span class="ti tab-badge" data-badge="2"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-          <span>Кабинет</span>
-        </div>
-      </nav>
-
-      <div class="toast" id="toast">Добавлено в корзину</div>
     </section>
+
+    <!-- shared: cart bar -->
+    <div class="cartbar" id="cartbar" onclick="openSheet()">
+      <div class="ic">🛒</div>
+      <div class="txt">
+        <small id="cartCount">0 товаров</small>
+        <b id="cartSum">0 ₽</b>
+      </div>
+      <div class="go">К оплате →</div>
+    </div>
+
+    <!-- shared: tab bar -->
+    <nav class="tabbar">
+      <div class="tab active" id="tabHome" onclick="goHome()">
+        <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M12 21s7-5.6 7-11a7 7 0 1 0-14 0c0 5.4 7 11 7 11Z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="2.6" stroke="currentColor" stroke-width="1.8"/></svg></span>
+        <span>Главная</span>
+      </div>
+      <div class="tab" id="tabStore" onclick="goStore()">
+        <span class="ti"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="6" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="6.5" cy="15" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="15" r="2.2" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="13" r="1.5" fill="currentColor"/></svg></span>
+        <span>Суперлейка</span>
+      </div>
+      <div class="tab qr" onclick="toast('Сканер QR на мойке')">
+        <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Z" stroke="#1a1a1a" stroke-width="1.9" stroke-linejoin="round"/><path d="M14 14h2v2h-2v-2Zm4 0h2v2h-2v-2Zm-4 4h2v2h-2v-2Zm4 0h2v2h-2v-2Z" fill="#1a1a1a"/></svg></span>
+      </div>
+      <div class="tab" onclick="openSheetIfCart()">
+        <span class="ti"><svg viewBox="0 0 24 24" fill="none"><path d="M4 5v4h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M4.6 9a8 8 0 1 1-.3 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8v4.5l3 1.8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span>Заказы</span>
+      </div>
+      <div class="tab">
+        <span class="ti tab-badge" data-badge="2"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.4" stroke="currentColor" stroke-width="1.8"/><path d="M5.5 19a6.5 6.5 0 0 1 13 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+        <span>Кабинет</span>
+      </div>
+    </nav>
+
+    <div class="toast" id="toast">Добавлено в корзину</div>
 
     <!-- ===================== PRODUCT DETAIL (PDP) ===================== -->
     <section class="screen pdp" id="pdp">
@@ -704,7 +884,7 @@
       `<div class="chip ${c.n===activeCat?'active':''}" onclick="setCat('${c.n}')"><span class="e">${c.e}</span>${c.n}</div>`
     ).join('');
   }
-  function setCat(n){ activeCat=n; renderChips(); renderGrid(); $('#mainScroll').scrollTo({top:380,behavior:'smooth'});}
+  function setCat(n){ activeCat=n; renderChips(); renderGrid(); const c=$('#chips'); if(c) $('#storeScroll').scrollTo({top:Math.max(0,c.offsetTop-70),behavior:'smooth'});}
 
   function renderGrid(){
     const list = activeCat==='Все' ? PRODUCTS : PRODUCTS.filter(p=>p.cat===activeCat);
@@ -756,6 +936,7 @@
       const qb = $('#q-'+id); if(qb) qb.textContent = q;
       const add = card.querySelector('.add'); if(add) add.classList.toggle('has', q>0);
     }
+    const sa = document.getElementById('sadd-'+id); if(sa) sa.classList.toggle('has', (cart[id]||0)>0);
     if(pdpId===id) renderPdpFoot();
   }
   function cartList(){
@@ -774,6 +955,33 @@
     bar.classList.toggle('show', n>0);
     $('#cartCount').textContent = qtyLabel(n);
     $('#cartSum').textContent = fmt(subtotal());
+  }
+
+  // ---------- Navigation (Home / Store) ----------
+  function showScreen(name){
+    document.querySelectorAll('.appscreen').forEach(s=>s.classList.remove('active'));
+    $('#'+name+'Screen').classList.add('active');
+    $('#tabHome').classList.toggle('active', name==='home');
+    $('#tabStore').classList.toggle('active', name==='store');
+  }
+  function goHome(){ closePDP(); showScreen('home'); }
+  function goStore(){ closePDP(); showScreen('store'); renderGrid(); $('#storeScroll').scrollTo({top:0}); }
+  function toggleHomeSheet(){ $('#homeSheet').classList.toggle('expanded'); }
+
+  function renderShelf(){
+    const pick = [1,5,2,10,8,4].map(id=>PRODUCTS.find(p=>p.id===id));
+    $('#shelf').innerHTML = pick.map(p=>{
+      const q = cart[p.id]||0;
+      return `
+      <div class="scard" onclick="openPDP(${p.id})">
+        <div class="sthumb"><span class="sdisc">−10%</span><img src="${p.img}" loading="lazy"/></div>
+        <div class="sname">${p.name}</div>
+        <div class="sprice">
+          <b>${fmt(p.price)}</b>
+          <button class="sadd ${q?'has':''}" id="sadd-${p.id}" onclick="event.stopPropagation();addToCart(${p.id})">+</button>
+        </div>
+      </div>`;
+    }).join('');
   }
 
   // ---------- Product detail (PDP) ----------
@@ -964,13 +1172,15 @@
     document.querySelectorAll('#bonusSeg button').forEach((b,i)=>b.classList.toggle('on',i===0));
     $('#success').classList.remove('show');
     closePDP();
-    renderGrid(); updateCart();
-    $('#mainScroll').scrollTo({top:0,behavior:'smooth'});
+    renderGrid(); renderShelf(); updateCart();
+    $('#storeScroll').scrollTo({top:0});
+    goHome();
   }
 
   // ---------- init ----------
   renderChips();
   renderGrid();
+  renderShelf();
   updateCart();
 </script>
 </body>
