@@ -483,6 +483,55 @@
   .pdp-gotocart{flex:1;height:56px;border-radius:16px;background:var(--yellow);color:#1a1a1a;border:none;font-family:var(--font);font-weight:800;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 26px rgba(255,224,0,.28);transition:.15s}
   .pdp-gotocart:active{transform:scale(.98)}
 
+  /* ===== Wash session (v2 — max intent) ===== */
+  .washflow{z-index:67;background:linear-gradient(180deg,#0c1622 0%,#0e0f12 44%);transform:translateY(100%);transition:transform .34s cubic-bezier(.2,.9,.25,1);visibility:hidden}
+  .washflow.show{transform:translateY(0);visibility:visible}
+  .wash-scroll{position:absolute;inset:0;bottom:96px;overflow-y:auto;padding-top:var(--safe-top)}
+  .wash-scroll::-webkit-scrollbar{width:0}
+  .wash-head{display:flex;align-items:center;gap:10px;padding:8px 16px 6px}
+
+  .wash-status{display:flex;flex-direction:column;align-items:center;padding:16px 18px 6px}
+  .ring{position:relative;width:176px;height:176px}
+  .ring svg{width:176px;height:176px;transform:rotate(-90deg)}
+  .ring .ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:11}
+  .ring .ring-fg{fill:none;stroke:var(--yellow);stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset .95s linear}
+  .ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+  .ring-center b{font-size:40px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+  .ring-center small{font-size:11px;color:var(--txt-3);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+  .wash-live{display:flex;align-items:center;gap:8px;margin-top:15px;font-size:13px;font-weight:700;color:#5fe084}
+  .wash-live i{width:8px;height:8px;border-radius:50%;background:#5fe084;animation:blink 1.1s infinite}
+  @keyframes blink{50%{opacity:.25}}
+  .wash-steps{display:flex;gap:8px;margin-top:16px}
+  .wstep{font-size:12px;font-weight:700;color:var(--txt-3);background:var(--surface);padding:8px 13px;border-radius:11px}
+  .wstep.done{color:#5fe084}
+  .wstep.on{color:#1a1a1a;background:var(--yellow)}
+  .wash-skip{margin-top:18px;background:none;border:none;color:var(--txt-3);font-family:var(--font);font-size:12.5px;text-decoration:underline;cursor:pointer}
+
+  .wash-done-top{display:flex;flex-direction:column;align-items:center;text-align:center;padding:22px 24px 4px}
+  .wash-done-top .wd-check{width:76px;height:76px;border-radius:50%;background:var(--green);display:grid;place-items:center;font-size:38px;color:#fff;margin-bottom:16px;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+  .wash-done-top h2{font-size:23px;font-weight:800;letter-spacing:-.4px}
+  .wash-done-top p{font-size:14px;color:var(--txt-2);line-height:1.5;margin-top:8px;max-width:300px}
+
+  .wash-nudge{padding:24px 18px 2px}
+  .wash-nudge h3{font-size:19px;font-weight:800;letter-spacing:-.3px}
+  .wash-nudge p{font-size:13px;color:var(--txt-2);margin-top:5px;line-height:1.45}
+  .wash-shelf{display:flex;gap:12px;overflow-x:auto;padding:14px 18px 6px}
+  .wash-shelf::-webkit-scrollbar{display:none}
+
+  .wash-pickup-note{display:flex;align-items:center;gap:11px;margin:10px 18px 0;background:var(--surface);border:1px solid rgba(52,199,89,.25);border-radius:15px;padding:13px 14px}
+  .wash-pickup-note .ic{width:38px;height:38px;border-radius:11px;background:rgba(52,199,89,.15);display:grid;place-items:center;font-size:17px;flex:0 0 auto}
+  .wash-pickup-note .info b{font-size:13.5px;font-weight:700;display:block}
+  .wash-pickup-note .info small{font-size:12px;color:var(--txt-2)}
+
+  .wash-foot{position:absolute;left:0;right:0;bottom:0;z-index:5;background:var(--app-bg);border-top:1px solid var(--line);padding:12px 18px calc(14px + env(safe-area-inset-bottom))}
+  .wf-cta{width:100%;height:56px;border:none;border-radius:16px;background:var(--yellow);color:#1a1a1a;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 10px 26px rgba(255,224,0,.28);transition:.15s}
+  .wf-cta:active{transform:scale(.98)}
+  .wf-hint{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--txt-3);font-size:12.5px;height:52px}
+  .wf-sub{text-align:center;font-size:11px;color:var(--txt-3);margin-top:9px}
+
+  .ppi.onsite .ic{background:rgba(52,199,89,.15)}
+  .ppi.onsite .pillt{background:rgba(52,199,89,.16);color:#5fe084}
+
   /* toast */
   .toast{position:absolute;left:50%;bottom:160px;transform:translate(-50%,20px);z-index:65;background:#fff;color:#1a1a1a;font-weight:700;font-size:13px;padding:11px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
   .toast.show{opacity:1;transform:translate(-50%,0)}
@@ -523,9 +572,9 @@
         <div class="road r4"></div>
         <div class="park"></div>
         <div class="river"></div>
-        <div class="wpin" style="top:30%;left:24%"><span class="wp-ic">💧</span></div>
-        <div class="wpin" style="top:22%;left:62%"><span class="wp-ic">💧</span></div>
-        <div class="wpin" style="top:40%;left:46%"><span class="wp-ic">💧</span></div>
+        <div class="wpin" style="top:30%;left:24%;cursor:pointer" onclick="openWash()"><span class="wp-ic">💧</span></div>
+        <div class="wpin" style="top:22%;left:62%;cursor:pointer" onclick="openWash()"><span class="wp-ic">💧</span></div>
+        <div class="wpin" style="top:40%;left:46%;cursor:pointer" onclick="openWash()"><span class="wp-ic">💧</span></div>
         <div class="me"></div>
       </div>
 
@@ -574,7 +623,7 @@
 
           <!-- quick actions -->
           <div class="qa-row">
-            <div class="qa" onclick="toast('Поиск мойки на карте')"><span class="qa-ic blue">💧</span>Помыться</div>
+            <div class="qa" onclick="openWash()"><span class="qa-ic blue">💧</span>Помыться</div>
             <div class="qa" onclick="toast('Оформление ОСАГО')"><span class="qa-ic">🛡️</span>ОСАГО</div>
             <div class="qa" onclick="goStore()"><span class="qa-ic yellow">🛒</span>Магазин</div>
             <div class="qa" onclick="toast('Спецпредложения')"><span class="qa-ic">🏷️</span>Акции</div>
@@ -717,6 +766,18 @@
       <div class="pdp-foot" id="pdpFoot"></div>
     </section>
 
+    <!-- ===================== WASH SESSION (v2 max-intent) ===================== -->
+    <section class="screen washflow" id="washScreen">
+      <div class="wash-scroll" id="washScroll">
+        <div class="wash-head">
+          <button class="store-back" onclick="closeWash()">‹</button>
+          <div class="store-title"><b>Мойка «Лейка»</b><small>ул. Тургенева, 138/2 · бокс 4</small></div>
+        </div>
+        <div id="washBody"></div>
+      </div>
+      <div class="wash-foot" id="washFoot"></div>
+    </section>
+
     <!-- ===================== PAYMENT SHEET ===================== -->
     <div class="scrim" id="scrim" onclick="closeSheet()"></div>
 
@@ -820,13 +881,13 @@
     <!-- ===================== SUCCESS ===================== -->
     <section class="success" id="success">
       <div class="check">✓</div>
-      <h2>Заказ оформлен!</h2>
-      <p>Мы уведомим вас, когда заказ будет готов к выдаче. Обычно это занимает 1–2 часа.</p>
+      <h2 id="successTitle">Заказ оформлен!</h2>
+      <p id="successSub">Мы уведомим вас, когда заказ будет готов к выдаче. Обычно это занимает 1–2 часа.</p>
       <div class="code">
         <small>Код получения</small>
         <b id="pickupCode">7421</b>
       </div>
-      <div class="where">Заберите в <b id="successPlace">GRASS Маркет на Ставропольской</b></div>
+      <div class="where" id="successWhere">Заберите в <b id="successPlace">GRASS Маркет на Ставропольской</b></div>
       <button class="done" onclick="resetAll()">Вернуться в магазин</button>
     </section>
 
@@ -867,6 +928,9 @@
     {id:4, type:'wash',    name:'Робомойка «Лейка Drive»',         addr:'ул. Дзержинского, 100',  dist:'3.8 км', ready:'сегодня к 18:00', icon:'💧'},
     {id:5, type:'partner', name:'GRASS Маркет в ТЦ «СБС»',         addr:'ул. Уральская, 79',      dist:'5.0 км', ready:'завтра к 12:00', icon:'🏪'},
   ];
+
+  // on-site pickup at the wash where the user is right now (v2 max-intent)
+  const WASH_POINT = {id:0, type:'onsite', name:'Мойка «Лейка» на Тургенева', addr:'Бокс выдачи у кассы', dist:'вы здесь', ready:'сразу, на выходе', icon:'💧'};
 
   const DISCOUNT = 0.10; // 10% уже в цене, показываем старую
   const cart = {}; // id -> qty
@@ -940,6 +1004,7 @@
       const add = card.querySelector('.add'); if(add) add.classList.toggle('has', q>0);
     }
     const sa = document.getElementById('sadd-'+id); if(sa) sa.classList.toggle('has', (cart[id]||0)>0);
+    const wa = document.getElementById('wadd-'+id); if(wa) wa.classList.toggle('has', (cart[id]||0)>0);
     if(pdpId===id) renderPdpFoot();
   }
   function cartList(){
@@ -955,9 +1020,10 @@
   function updateCart(){
     const n = totalQty();
     const bar = $('#cartbar');
-    bar.classList.toggle('show', n>0);
+    bar.classList.toggle('show', n>0 && !washActive);
     $('#cartCount').textContent = qtyLabel(n);
     $('#cartSum').textContent = fmt(subtotal());
+    if(washActive) renderWashFoot();
   }
 
   // ---------- Navigation (Home / Store) ----------
@@ -1085,6 +1151,130 @@
     else toast('Здесь будут ваши заказы');
   }
 
+  // ---------- Wash session (v2 — max-intent cross-sell) ----------
+  let washState='washing';      // 'washing' | 'done'
+  let washActive=false;
+  let washTotal=210, washLeft=0, washTimer=null;
+  const FINISH_WASHING = [1,10,6,5,11,8];   // shelf while washing
+  const FINISH_DONE    = [1,8,10,6];        // recommended right after wash
+  const mmss = s => Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+
+  function washShelfHTML(){
+    const ids = washState==='done' ? FINISH_DONE : FINISH_WASHING;
+    return ids.map(id=>{
+      const p=PRODUCTS.find(x=>x.id===id); const q=cart[id]||0;
+      return `
+      <div class="scard" onclick="openPDP(${id})">
+        <div class="sthumb"><span class="sdisc">−10%</span><img src="${p.img}" loading="lazy"/></div>
+        <div class="sname">${p.name}</div>
+        <div class="sprice">
+          <b>${fmt(p.price)}</b>
+          <button class="sadd ${q?'has':''}" id="wadd-${id}" onclick="event.stopPropagation();addToCart(${id})">+</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function renderWash(){
+    const body=$('#washBody');
+    if(washState==='washing'){
+      body.innerHTML = `
+        <div class="wash-status">
+          <div class="ring">
+            <svg viewBox="0 0 176 176">
+              <circle class="ring-bg" cx="88" cy="88" r="78"/>
+              <circle class="ring-fg" id="washRing" cx="88" cy="88" r="78"/>
+            </svg>
+            <div class="ring-center"><b id="washTime">0:00</b><small>осталось</small></div>
+          </div>
+          <div class="wash-live"><i></i> Идёт мойка · бокс 4</div>
+          <div class="wash-steps">
+            <div class="wstep done">✓ Пена</div>
+            <div class="wstep on">● Вода</div>
+            <div class="wstep">Воск</div>
+          </div>
+          <button class="wash-skip" onclick="finishWash()">Пропустить ожидание (демо) →</button>
+        </div>
+        <div class="wash-nudge">
+          <h3>Пока идёт мойка — закрепите результат ✨</h3>
+          <p>Добавьте уход и заберите его на выходе, в боксе выдачи у кассы — без очереди и доставки.</p>
+        </div>
+        <div class="wash-shelf" id="washShelf"></div>
+        <div class="wash-pickup-note">
+          <div class="ic">💧</div>
+          <div class="info"><b>Забрать здесь же</b><small>Бокс выдачи на этой мойке · сразу после мойки</small></div>
+        </div>
+        <div style="height:14px"></div>`;
+      updateRing();
+    } else {
+      body.innerHTML = `
+        <div class="wash-done-top">
+          <div class="wd-check">✓</div>
+          <h2>Мойка завершена!</h2>
+          <p>Машина блестит ✨ Самое время закрепить результат, пока вы на месте.</p>
+        </div>
+        <div class="wash-nudge">
+          <h3>Закрепите результат 🧴</h3>
+          <p>Чернитель шин, антидождь и защита стёкол — заберёте здесь же, на выходе. Доставка не нужна.</p>
+        </div>
+        <div class="wash-shelf" id="washShelf"></div>
+        <div class="wash-pickup-note">
+          <div class="ic">💧</div>
+          <div class="info"><b>Забрать здесь же</b><small>Бокс выдачи на этой мойке · сейчас</small></div>
+        </div>
+        <div style="height:14px"></div>`;
+    }
+    $('#washShelf').innerHTML = washShelfHTML();
+    renderWashFoot();
+  }
+
+  function updateRing(){
+    const ring=$('#washRing'); if(!ring) return;
+    const circ=2*Math.PI*78;
+    ring.style.strokeDasharray=circ;
+    ring.style.strokeDashoffset=circ*(1-washLeft/washTotal);
+    const t=$('#washTime'); if(t) t.textContent=mmss(washLeft);
+  }
+
+  function renderWashFoot(){
+    const foot=$('#washFoot'); if(!foot) return;
+    const n=totalQty();
+    if(n>0){
+      foot.innerHTML = `
+        <button class="wf-cta" onclick="openSheet()">Оформить · ${qtyLabel(n)} · ${fmt(subtotal())} →</button>
+        <div class="wf-sub">Заберёте на выходе с мойки — бокс выдачи у кассы</div>`;
+    } else {
+      foot.innerHTML = `<div class="wf-hint">🧴 Добавьте уход — заберёте здесь же, без доставки</div>`;
+    }
+  }
+
+  function openWash(){
+    closePDP(); closeSheet();
+    washActive=true; washState='washing'; washLeft=washTotal;
+    selectedPickup=WASH_POINT;
+    renderWash();
+    $('#washScreen').classList.add('show');
+    updateCart();
+    clearInterval(washTimer);
+    washTimer=setInterval(()=>{
+      washLeft--;
+      if(washLeft<=0){ washLeft=0; updateRing(); finishWash(); return; }
+      updateRing();
+    },1000);
+  }
+  function finishWash(){
+    clearInterval(washTimer); washTimer=null;
+    if(washState!=='done'){ washState='done'; renderWash(); }
+  }
+  function closeWash(){
+    clearInterval(washTimer); washTimer=null;
+    washActive=false; washState='washing';
+    $('#washScreen').classList.remove('show');
+    if(selectedPickup===WASH_POINT) selectedPickup=PICKUPS[0];
+    updateCart();
+    goHome();
+  }
+
   // ---------- Toast ----------
   let toastT;
   function toast(msg){
@@ -1117,11 +1307,14 @@
 
   function renderPickup(){
     const p = selectedPickup;
+    const tags = {partner:'Магазин-партнёр', wash:'Точка автомойки Лейка', onsite:'Вы на этой мойке'};
     $('#pickupIcon').textContent = p.icon;
-    $('#pickupTag').textContent = p.type==='partner' ? 'Магазин-партнёр' : 'Точка автомойки Лейка';
-    $('#pickupTag').style.color = p.type==='partner' ? '#5fe084' : 'var(--yellow)';
+    $('#pickupTag').textContent = tags[p.type];
+    $('#pickupTag').style.color = p.type==='wash' ? 'var(--yellow)' : '#5fe084';
     $('#pickupName').textContent = p.name;
-    $('#pickupAddr').textContent = `${p.addr} · ${p.dist} · готово ${p.ready}`;
+    $('#pickupAddr').textContent = p.type==='onsite'
+      ? `${p.addr} · готово ${p.ready}`
+      : `${p.addr} · ${p.dist} · готово ${p.ready}`;
   }
 
   function renderTotals(){
@@ -1185,23 +1378,30 @@
     $('#pickerScrim').classList.remove('show');
     $('#picker').classList.remove('show');
   }
+  function pickerList(){ return washActive ? [WASH_POINT, ...PICKUPS] : PICKUPS; }
   function renderPicker(){
-    $('#ppList').innerHTML = PICKUPS.map(p=>`
+    const pill = {partner:'Партнёр', wash:'Мойка', onsite:'Вы здесь'};
+    $('#ppList').innerHTML = pickerList().map(p=>{
+      const extra = p.type==='onsite'
+        ? `<span class="av">● Готово ${p.ready}</span>`
+        : `<span>📍 ${p.dist}</span><span class="av">● Готово ${p.ready}</span>`;
+      return `
       <div class="ppi ${p.type} ${p.id===selectedPickup.id?'on':''}" onclick="choosePickup(${p.id})">
         <div class="ic">${p.icon}</div>
         <div class="info">
           <div class="top">
             <b>${p.name}</b>
-            <span class="pillt">${p.type==='partner'?'Партнёр':'Мойка'}</span>
+            <span class="pillt">${pill[p.type]}</span>
           </div>
           <small>${p.addr}</small>
-          <div class="extra"><span>📍 ${p.dist}</span><span class="av">● Готово ${p.ready}</span></div>
+          <div class="extra">${extra}</div>
         </div>
         <div class="radio"></div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
   function choosePickup(id){
-    selectedPickup = PICKUPS.find(p=>p.id===id);
+    selectedPickup = pickerList().find(p=>p.id===id);
     renderPickup();
     setTimeout(closePicker, 180);
   }
@@ -1211,12 +1411,23 @@
     const code = String(Math.floor(1000+Math.random()*9000));
     $('#pickupCode').textContent = code;
     $('#successPlace').textContent = selectedPickup.name;
+    if(selectedPickup.type==='onsite'){
+      $('#successTitle').textContent = 'Готово! Заберите на выходе';
+      $('#successSub').textContent = 'Покажите код в боксе выдачи у кассы — товар отдадут сразу, пока вы на мойке.';
+      $('#successWhere').innerHTML = 'Бокс выдачи · <b>'+selectedPickup.name+'</b>';
+    } else {
+      $('#successTitle').textContent = 'Заказ оформлен!';
+      $('#successSub').textContent = 'Мы уведомим вас, когда заказ будет готов к выдаче. Обычно это занимает 1–2 часа.';
+      $('#successWhere').innerHTML = 'Заберите в <b>'+selectedPickup.name+'</b>';
+    }
     closeSheet();
     setTimeout(()=> $('#success').classList.add('show'), 250);
   }
   function resetAll(){
     for(const k in cart) delete cart[k];
     promoApplied=false; bonusMode='earn'; selectedPickup=PICKUPS[0];
+    clearInterval(washTimer); washTimer=null; washActive=false; washState='washing';
+    $('#washScreen').classList.remove('show');
     removePromo();
     document.querySelectorAll('#bonusSeg button').forEach((b,i)=>b.classList.toggle('on',i===0));
     $('#success').classList.remove('show');
