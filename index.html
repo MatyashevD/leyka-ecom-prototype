@@ -211,14 +211,16 @@
 
   .map-top{position:absolute;top:calc(var(--safe-top) - 4px);left:0;right:0;padding:6px 14px;z-index:10}
   .map-top .loc{background:rgba(22,23,25,.82);backdrop-filter:blur(12px);border-radius:16px;padding:7px 10px;box-shadow:0 6px 20px rgba(0,0,0,.3)}
-  .map-fab{position:absolute;right:16px;bottom:calc(62% + var(--tab-h) - 28px);width:46px;height:46px;border-radius:14px;background:rgba(22,23,25,.86);backdrop-filter:blur(12px);border:1px solid var(--line);color:var(--txt);font-size:20px;display:grid;place-items:center;cursor:pointer;z-index:20;box-shadow:0 8px 22px rgba(0,0,0,.35)}
+  .map-fab{position:absolute;right:16px;bottom:calc(42% + var(--tab-h) + 12px);width:46px;height:46px;border-radius:14px;background:rgba(22,23,25,.86);backdrop-filter:blur(12px);border:1px solid var(--line);color:var(--txt);font-size:20px;display:grid;place-items:center;cursor:pointer;z-index:20;box-shadow:0 8px 22px rgba(0,0,0,.35);transition:opacity .2s}
+  .home-sheet.expanded ~ .map-fab,.map-fab.hide{opacity:0;pointer-events:none}
 
-  .home-sheet{position:absolute;left:0;right:0;bottom:var(--tab-h);height:62%;z-index:30;
+  .home-sheet{position:absolute;left:0;right:0;bottom:var(--tab-h);height:42%;z-index:30;
     background:var(--app-bg);border-radius:26px 26px 0 0;box-shadow:0 -14px 44px rgba(0,0,0,.5);
-    display:flex;flex-direction:column;transition:height .32s cubic-bezier(.2,.9,.25,1);overflow:hidden}
-  .home-sheet.expanded{height:calc(100% - var(--safe-top) - 6px)}
-  .hs-grip{padding:10px 0 6px;display:grid;place-items:center;cursor:pointer;flex:0 0 auto}
-  .hs-grip span{width:40px;height:5px;border-radius:3px;background:var(--surface-3);display:block}
+    display:flex;flex-direction:column;transition:height .34s cubic-bezier(.2,.9,.25,1);overflow:hidden}
+  .hs-grip{padding:11px 0 8px;display:grid;place-items:center;cursor:grab;flex:0 0 auto;touch-action:none}
+  .hs-grip:active{cursor:grabbing}
+  .hs-grip span{width:42px;height:5px;border-radius:3px;background:var(--surface-3);display:block;transition:background .15s}
+  .hs-grip:active span{background:var(--txt-3)}
   .hs-scroll{overflow-y:auto;padding:2px 16px 14px}
   .hs-scroll::-webkit-scrollbar{width:0}
   .hs-search{height:50px;background:var(--surface);border-radius:15px;display:flex;align-items:center;gap:10px;padding:0 16px;color:var(--txt-2);font-size:15px;font-weight:500;cursor:pointer;margin-bottom:16px}
@@ -541,7 +543,7 @@
 
       <!-- home bottom sheet -->
       <div class="home-sheet" id="homeSheet">
-        <div class="hs-grip" onclick="toggleHomeSheet()"><span></span></div>
+        <div class="hs-grip" id="hsGrip"><span></span></div>
         <div class="hs-scroll">
           <div class="hs-search" onclick="toast('Поиск моек и роботизированных моек рядом')">
             <span>🔍</span> Где помыть машину?
@@ -966,7 +968,53 @@
   }
   function goHome(){ closePDP(); showScreen('home'); }
   function goStore(){ closePDP(); showScreen('store'); renderGrid(); $('#storeScroll').scrollTo({top:0}); }
-  function toggleHomeSheet(){ $('#homeSheet').classList.toggle('expanded'); }
+
+  // draggable home bottom sheet with snap points
+  function initHomeSheet(){
+    const sheet = $('#homeSheet'), grip = $('#hsGrip'), fab = document.querySelector('.map-fab');
+    const phoneH = () => $('#phone').clientHeight;
+    const peekH  = () => Math.round(phoneH()*0.42);
+    const fullH  = () => phoneH() - 60 - 84; // top gap + tab bar
+    let dragging=false, startY=0, startH=0, moved=0;
+
+    const setH = h => { sheet.style.height = Math.max(peekH(), Math.min(fullH(), h)) + 'px'; };
+    const applyExpanded = exp => {
+      sheet.classList.toggle('expanded', exp);
+      fab.classList.toggle('hide', exp);
+    };
+    const snap = () => {
+      const h = sheet.offsetHeight, mid = (peekH()+fullH())/2;
+      const exp = h > mid;
+      sheet.style.transition = 'height .3s cubic-bezier(.2,.9,.25,1)';
+      sheet.style.height = (exp ? fullH() : peekH()) + 'px';
+      applyExpanded(exp);
+      if(!exp) $('.hs-scroll')?.scrollTo({top:0});
+    };
+
+    grip.addEventListener('pointerdown', e=>{
+      dragging=true; moved=0; startY=e.clientY; startH=sheet.offsetHeight;
+      sheet.style.transition='none'; grip.setPointerCapture(e.pointerId);
+    });
+    grip.addEventListener('pointermove', e=>{
+      if(!dragging) return;
+      const dy = startY - e.clientY; moved = Math.abs(dy);
+      setH(startH + dy);
+    });
+    const end = ()=>{
+      if(!dragging) return; dragging=false;
+      if(moved < 6){ // treat as tap → toggle
+        const exp = sheet.offsetHeight < (peekH()+fullH())/2;
+        sheet.style.transition='height .3s cubic-bezier(.2,.9,.25,1)';
+        sheet.style.height=(exp?fullH():peekH())+'px';
+        applyExpanded(exp);
+        if(!exp) $('.hs-scroll')?.scrollTo({top:0});
+      } else snap();
+    };
+    grip.addEventListener('pointerup', end);
+    grip.addEventListener('pointercancel', end);
+
+    sheet.style.height = peekH()+'px';
+  }
 
   function renderShelf(){
     const pick = [1,5,2,10,8,4].map(id=>PRODUCTS.find(p=>p.id===id));
@@ -1182,6 +1230,7 @@
   renderGrid();
   renderShelf();
   updateCart();
+  initHomeSheet();
 </script>
 </body>
 </html>
