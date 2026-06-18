@@ -477,10 +477,11 @@
   .pdp-foot .fp b{font-size:20px;font-weight:800;display:block}
   .pdp-addbtn{flex:1;height:56px;border:none;border-radius:16px;background:var(--yellow);color:#1a1a1a;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 10px 26px rgba(255,224,0,.28);transition:.15s}
   .pdp-addbtn:active{transform:scale(.98)}
-  .pdp-foot-step{flex:1;display:flex;align-items:center;justify-content:space-between;background:var(--yellow);border-radius:16px;height:56px;overflow:hidden}
-  .pdp-foot-step button{width:54px;height:56px;border:none;background:none;color:#1a1a1a;font-size:26px;font-weight:700;cursor:pointer}
-  .pdp-foot-step b{font-size:17px;font-weight:800;color:#1a1a1a}
-  .pdp-gotocart{flex:0 0 auto;height:56px;padding:0 18px;border-radius:16px;background:#1a1a1a;color:#fff;border:none;font-family:var(--font);font-weight:700;font-size:14px;cursor:pointer;display:flex;align-items:center;gap:8px}
+  .pdp-foot-step{flex:0 0 auto;width:132px;display:flex;align-items:center;justify-content:space-between;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;height:56px;overflow:hidden}
+  .pdp-foot-step button{width:46px;height:56px;border:none;background:none;color:var(--yellow);font-size:24px;font-weight:700;cursor:pointer}
+  .pdp-foot-step b{font-size:16px;font-weight:800;color:var(--txt)}
+  .pdp-gotocart{flex:1;height:56px;border-radius:16px;background:var(--yellow);color:#1a1a1a;border:none;font-family:var(--font);font-weight:800;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 26px rgba(255,224,0,.28);transition:.15s}
+  .pdp-gotocart:active{transform:scale(.98)}
 
   /* toast */
   .toast{position:absolute;left:50%;bottom:160px;transform:translate(-50%,20px);z-index:65;background:#fff;color:#1a1a1a;font-weight:700;font-size:13px;padding:11px 18px;border-radius:14px;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.4)}
@@ -1073,10 +1074,10 @@
       foot.innerHTML = `
         <div class="pdp-foot-step">
           <button onclick="dec(${p.id})">−</button>
-          <b>${q} шт · ${fmt(p.price*q)}</b>
+          <b>${q}</b>
           <button onclick="addToCart(${p.id})">＋</button>
         </div>
-        <button class="pdp-gotocart" onclick="openSheet()">Оформить →</button>`;
+        <button class="pdp-gotocart" onclick="openSheet()">Оформить · ${fmt(p.price*q)} →</button>`;
     }
   }
   function openSheetIfCart(){
